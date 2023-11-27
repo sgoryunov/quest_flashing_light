@@ -4,10 +4,11 @@
 #define LIGHT_THREE 12
 
 const short lights_pin[3] = {LIGHT_ONE,LIGHT_TOW,LIGHT_THREE};
-const short shoots[12] = {LIGHT_ONE,LIGHT_TOW,LIGHT_ONE,
+const short shoots[10] = {LIGHT_ONE,LIGHT_TOW,LIGHT_ONE,
                           LIGHT_THREE,LIGHT_ONE,LIGHT_TOW,
                           LIGHT_ONE,LIGHT_THREE,LIGHT_THREE,LIGHT_ONE};
 bool isStartLight = false;
+int sensorVal = LOW;
 
 void setup() {
 
@@ -21,16 +22,14 @@ void setup() {
 }
 
 void loop() {
-  int sensorVal = digitalRead(BUTTON_PIN);
-//  if(sensorVal == LOW && !isStartLight) isStartLight = true;
-  if(sensorVal == LOW){
+  int cur_sensorVal = digitalRead(BUTTON_PIN);
+  if(cur_sensorVal == LOW and sensorVal == HIGH){
     for(short pin:shoots){
       digitalWrite(pin, LOW);
       delay(1000);
       digitalWrite(pin, HIGH);
       delay(1000);
     }
-//    isStartLight = false;
-//      for(short pin:lights_pin) digitalWrite(pin, LOW);
   };
+  sensorVal = cur_sensorVal; 
 }
